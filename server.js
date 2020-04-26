@@ -83,6 +83,7 @@ function detailsHandler(request, response) {
   let safeValue = [id];
   client.query(SQL, safeValue)
     .then(results => {
+        console.log(results.rows[0]);
       response.render('./pages/favorite', {data:results.rows[0]});
 
     });
