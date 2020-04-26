@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Digimon Cards</h1>
+    <section id="digimon-cards">
+        <%data.forEach(obj => {%>
+            <div class="card">
+                <h2 class="name"><%= obj.name%></h2>
+                <img src="<%= obj.img%>" alt="Digimon Image">
+                <h4 class="level"><%= obj.level%></h4>
+                <form action="/fav" method="get">
+                    <input type="text" name="name" value="<%= obj.name%>">
+                    <input type="text" name="img" value="<%= obj.img%>">
+                    <input type="text" name="level" value="<%= obj.level%>">
+                    <input type="submit" value="Add to Favorites">
+                </form>
+            </div>
+        <%})%>
+    </section>
+</body>
+</html>
