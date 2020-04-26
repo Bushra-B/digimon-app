@@ -29,7 +29,8 @@ app.get('/', (request, response) => {
 app.get('/home', homePageHandler);
 app.get('/fav', favoriteHandler);
 app.get('/favPage', favPageHandler);
-
+app.get('/details/:digimonID', detailsHandler);
+// app.get('/detailsPage', detailsPageHandler);
 
 
 
@@ -67,17 +68,37 @@ function favoriteHandler(request, response) {
 }
 
 function favPageHandler(request, response) {
-    let SQL ='SELECT * FROM digimons;';
-    client.query(SQL)
+  let SQL ='SELECT * FROM digimons;';
+  client.query(SQL)
     .then(results => {
-        response.render('./pages/favorite', {data:results.rows});
+      response.render('./pages/favorite', {data:results.rows});
 
     });
 }
 
+//Details Page
+function detailsHandler(request, response) {
+  let id = request.params.digimonID;
+  let SQL = 'SELECT * FROM digimons WHERE id=$1;';
+  let safeValue = [id];
+  client.query(SQL, safeValue)
+    .then(results => {
+      response.render('./pages/favorite', {data:results.rows[0]});
+
+    });
+
+}
+
+// function detailsPageHandler(request, response) {
+// }
 
 
 // Listen on port
-app.listen(PORT, () => {
-  console.log('Listening on port: ', PORT);
+// app.listen(PORT, () => {
+//   console.log('Listening on port: ', PORT);
+// });
+client.connect().then(() =>{
+  app.listen(PORT, () => {
+    console.log('Listening on port: ', PORT);
+  });
 });
